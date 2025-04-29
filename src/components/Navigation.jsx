@@ -26,22 +26,21 @@ export default function Navigation({
         <h1>BookBuddy</h1>
       </Link>
       <div className="rightNav">
-      {token ? (
-        <>
-        
-          <p id="helloMessage">Hello, {firstName}</p>
-          <Link to="/account" className="linkNav">
-            Account
+        {token ? (
+          <>
+            <p id="helloMessage">{firstName}</p>
+            <Link to="/account" className="linkNav">
+              Account
+            </Link>
+            <button onClick={handleLogout} className="linkButton">
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link to="/login" className="linkButton">
+            Login
           </Link>
-          <button onClick={handleLogout} className="linkButton">
-            Logout
-          </button>
-        </>
-      ) : (
-        <Link to="/login" className="linkButton">
-          Login
-        </Link>
-      )}
+        )}
       </div>
     </nav>
   );

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MyBooksCard from "./MyBooksCard";
 
-export default function Account({ firstName, token }) {
+export default function Account({ firstName, token, email }) {
   const [reservations, setReservations] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -24,7 +24,6 @@ export default function Account({ firstName, token }) {
           throw new Error(data.error);
         }
 
-        console.log("Reservations:", data);
         setReservations(data);
       } catch (error) {
         console.error(error);
@@ -63,9 +62,11 @@ export default function Account({ firstName, token }) {
 
   return (
     <div className="accountPage">
-      <h1>Welcome, {firstName}!</h1>
+      <h1>Welcome back, {firstName}!</h1>
 
-      <h2>Your Checked Out Books:</h2>
+      <h2>Account email: {email || "not available"} </h2>
+
+      <h1>Your Checked Out Books:</h1>
 
       {errorMessage && <p className="error">{errorMessage}</p>}
 
@@ -80,7 +81,9 @@ export default function Account({ firstName, token }) {
           ))}
         </div>
       ) : (
-        <p>You have no books checked out</p>
+        <p>
+          You have no books checked out <br></br> :(
+        </p>
       )}
     </div>
   );

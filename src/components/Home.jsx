@@ -17,7 +17,7 @@ export default function Home() {
           "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books"
         );
         const data = await res.json();
-        console.log(data);
+
         setBooks(data);
       } catch (error) {
         console.error(error);

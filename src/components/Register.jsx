@@ -28,14 +28,15 @@ export default function Register({ setFirstName }) {
       );
 
       const result = await res.json();
-      console.log(result);
 
       if (result.token) {
         setFirstName(localFirstName);
         alert("You're all signed up! Please log in.");
         navigate("/login");
       } else {
-        setError(result.error || "Registration failed.");
+        setError(
+          result.error || "Registration failed. This email is already in use!"
+        );
       }
     } catch (error) {
       setError(error.message);

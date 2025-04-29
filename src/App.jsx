@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Navigation from './components/Navigation';
 import Account from './components/Account';
 import Home from './components/Home';
@@ -12,6 +12,16 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('authToken') || null);
   const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || "");
   const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail") || "");
+
+
+  useEffect(()=>{
+    const storedEmail = localStorage.getItem("userEmail");
+  
+    if(storedEmail) {
+      setUserEmail(storedEmail);
+    }
+  },[]);
 
   useEffect(() => {
     if (token) {
@@ -22,7 +32,7 @@ function App() {
           });
           const userInfo = await res.json();
           setFirstName(userInfo.firstname);
-          console.log(userInfo);
+        
         } catch (error) {
           console.error("Error fetching user info:", error);
         }
@@ -34,10 +44,13 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("firstName");
+    localStorage.removeItem("userEmail");
     setToken(null);
     setFirstName("");
+    setUserEmail("")
     navigate("/");
   };
+
 
   return (
     <>
@@ -58,7 +71,7 @@ function App() {
           element={<Login setToken={setToken} token={token} setFirstName={setFirstName} />} 
         />
         <Route path="/register" element={<Register setFirstName={setFirstName} />} />
-        <Route path="/account" element={<Account token={token} firstName={firstName}/>} />
+        <Route path="/account" element={<Account token={token} firstName={firstName} email={userEmail}/>} />
       </Routes>
     </>
   );

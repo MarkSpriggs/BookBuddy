@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, } from "react-router-dom";
 
 export default function SingleBook() {
   const { id } = useParams();
@@ -58,8 +58,6 @@ export default function SingleBook() {
         throw new Error(data.error);
       }
 
-      console.log("Reservation successful:", data);
-
       setSingleBook((prevState) => ({
         ...prevState,
         available: false,
@@ -92,19 +90,14 @@ export default function SingleBook() {
       </button>
 
       {token && singleBook.available && (
-        <button  onClick={handleReserve} className="reserveButton">
+        <button onClick={handleReserve} className="reserveButton">
           Reserve Book
         </button>
       )}
 
       {!singleBook.available && <p></p>}
-    
 
       <p>Summary: {singleBook.description}</p>
-
-      </div>
-
-
-      
+    </div>
   );
 }

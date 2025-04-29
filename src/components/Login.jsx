@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ setToken, token, setFirstname }) {
+export default function Login({ setToken, token, }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -24,13 +24,15 @@ export default function Login({ setToken, token, setFirstname }) {
         }
       );
       const result = await res.json();
-      console.log("Login result:", result);
 
       if (result.token) {
         localStorage.setItem("authToken", result.token);
         localStorage.setItem("firstName", result.firstname);
+        localStorage.setItem("userEmail", email);
+
         setToken(result.token);
         setFirstName(result.firstname);
+        navigate("/account");
       } else {
         setError(result.error);
         setTimeout(() => {
@@ -69,6 +71,10 @@ export default function Login({ setToken, token, setFirstname }) {
         </label>
         <button type="submit">SUBMIT</button>
       </form>
+      <p>Don't have an account? Sign up here</p>
+      <button className="reserveButton" onClick={() => navigate("/register")}>
+        Sign Up
+      </button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
